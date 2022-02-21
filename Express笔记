@@ -1,0 +1,44 @@
+get与req.query
+    html:
+        <form action="http://localhost:8080/login" method="get">
+                用户：
+                <input type="text" name="user" id="user" placeholder="用户名"/>
+        </form>
+
+    input输入的数据可以通过req.query.id获取，不写id则返回全部数据,如
+
+    js:
+
+        const express=require("express");
+        var app = express();
+        app.get("/login",function(req,res){
+            console.log(req.query);
+            res.send("登录路由，user为："+req.query.user+"<br>password为："+req.query.password);
+        });
+        app.listen(8080);
+
+
+post与req.body
+    html:
+        <form action="http://localhost:8080/" method="post">
+            用户：
+            <input type="text" name="user" id="user" placeholder="用户名">
+        </form>
+
+    input输入的数据可以通过req.body.id获取，不写id则返回全部数据,如
+
+    js:
+        const express = require("express");
+        const bodyParser = require("body-parser");
+
+        var app = express();
+        var jsonParser = bodyParser.json();
+        var urlencodedParser = bodyParser.urlencoded({ extended: false });
+
+        app.post('/',urlencodedParser,function(req,res){
+            console.log(req.body);
+            res.send(req.body);
+        });
+        app.listen(8080);
+
+

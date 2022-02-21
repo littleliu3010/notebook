@@ -1,0 +1,142 @@
+常用导航栏样式：
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  li a {
+    display: block;
+    padding: 8px;
+    background-color: #dddddd;
+  }
+  li {
+    float: left;
+
+  }
+  粘性导航栏：
+    ul {
+      position: sticky;
+    }
+
+常用按钮样式：
+  <a href="#" class="button">链接按钮</a>
+  <button class="button">按钮</button>
+  <input type="button" class="button" value="输入按钮">
+
+  .button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+
+
+   
+box-sizing: border-box;
+
+transition(过渡)与transform(转换)结合
+  div.test1 {
+    width: 200px;
+    height: 200px;
+    background: red;
+    transition: width 2s, height 2s, transform 2s;
+  }
+  div.test1:hover {
+    width: 400px;
+    height: 400px;
+    transform: rotate(180deg);
+  }
+
+animation的使用
+  div {
+    width: 100px;
+    height: 100px;
+    background-color: red;
+    position: relative;
+    animation-name: example;
+    animation-duration: 4s;
+    animation-iteration-count: 1;
+  }
+
+  @keyframes example {
+    0%   {background-color:red; left:0px; top:0px;}
+    25%  {background-color:yellow; left:200px; top:0px;}
+    50%  {background-color:blue; left:200px; top:200px;}
+    75%  {background-color:green; left:0px; top:200px;}
+    100% {background-color:red; left:0px; top:0px;}
+  }
+
+animation在动画最后一帧结束后，会返回到animation执行之前的时候
+animation-fill-mode则可以更改:
+  none:默认值。动画在执行之前或之后不会对元素应用任何样式。
+  forwards:元素将保留由最后一个关键帧设置的样式值（依赖 animation-direction 和 animation-iteration-count）。
+  backwards:元素将获取由第一个关键帧设置的样式值（取决于 animation-direction），并在动画延迟期间保留该值。
+  both:动画会同时遵循向前和向后的规则，从而在两个方向上扩展动画属性。
+
+animation简写:
+  animation: name, duration, timing-function, delay, iteration-count, direction;
+  如：animation: example 5s linear 2s infinite alternate;
+  等同于：
+    animation-name: example;
+    animation-duration: 5s;
+    animation-timing-function: linear;
+    animation-delay: 2s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+
+响应式设计：
+  设置视口：
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  网格视图：
+    //设置每列宽度
+    .col-1 {width: 8.33%;}
+    .col-2 {width: 16.66%;}
+    .col-3 {width: 25%;}
+    .col-4 {width: 33.33%;}
+    .col-5 {width: 41.66%;}
+    .col-6 {width: 50%;}
+    .col-7 {width: 58.33%;}
+    .col-8 {width: 66.66%;}
+    .col-9 {width: 75%;}
+    .col-10 {width: 83.33%;}
+    .col-11 {width: 91.66%;}
+    .col-12 {width: 100%;}
+
+    //设置列浮动在最左
+    [class*="col-"] {
+    float: left;
+    padding: 15px;
+    border: 1px solid red;
+    }
+
+    //设置行，一行中有数列div
+    <div class="row">
+      <div class="col-3">...</div> <!-- 25% -->
+      <div class="col-9">...</div> <!-- 75% -->
+    </div>
+
+    //清除浮动，以免影响下一行
+    .row::after {
+      content: "";
+      clear: both;
+      display: table;
+    }
+
+  媒体查询：
+    @media only screen and (min-width: 768px) {}
+      超小型设备（600px及以下的手机）
+      小型设备（平板电脑竖屏模式和大屏手机，600 像素及以上）
+      中型设备（平板电脑横屏模式，768 像素及以上）
+      大型设备（笔电、台式机，992 像素及以上）
+      超大型设备（大屏笔电、台式机，1200 像素及以上）
+    该方法可以用于控制字体大小，div显示，背景颜色等等
+      可以使用min-device-width来获取显示器的大小，而不是浏览器的大小。
+
+

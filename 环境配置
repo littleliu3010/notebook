@@ -1,0 +1,13 @@
+
+npm install cnpm -g --registry=https://registry.npm.taobao.org//安装cnpm
+cnpm install -g vue-cli  //全局安装vue-cli
+vue init webpack <项目名>//通过vue-cli创建项目
+
+
+后端：
+  express： npm install express --save
+  cors：    npm i cors
+  mysql:    npm install mysql
+
+前端：
+npm install jquery   //import $ from jquery //在需要使用的页面中

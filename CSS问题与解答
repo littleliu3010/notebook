@@ -1,0 +1,79 @@
+问题1：改变子div的margin-top，影响父div的margin-top。
+原因：一个盒子如果没有上补白(padding-top)和上边框(border-top)，
+  那么这个盒子的上边距会和其内部文档流中的第一个子元素的上边距重叠。
+解决：为父div增加padding-top或border-top。
+
+问题2：元素水平居中
+解决：
+  1.块级元素 display: block 如:<div>, <p>, <h>, <ul>, <table>
+  
+    1)使用margin: 0 auto 
+    缺点：无法设置上下margin
+    2)使用position: relative;left: 50%;top: 50%;margin-left: -px;margin-top: -px;
+      其中margin-left和margin-top设为子div长宽的一半
+    缺点：没有margin: 0 auto 方便
+    3)将该元素改变为行内块元素  display: inline-block 
+      再在其父级元素中加入 text-align: center
+    缺点：将元素改变为内联元素，会导致排列出现困难
+    4)使用position: absolute 和 left: 50%, transform: translateX(-50%)
+    5)使用position: flex
+
+  2.内联元素 display: inline 如:<span>, <b>, <td>, <a>, <img>
+    
+    1)
+
+    2)
+
+  3.元素内文本居中
+
+    1)直接在文本的父级元素中加入text-align: center 即可
+
+问题3：元素垂直居中
+解决：方法与水平居中类似，说说不一样的
+  1.块级元素
+    1)利用flex布局,其中align-items: center
+    2)多行可以利用flex布局,改变布局方向flex-direction: column,
+      justify-content: center
+  2.内联元素
+    1)单行设置line-height与元素height相同即可
+      或使用flex布局,其中align-items: center
+    2)多行可以利用flex布局,改变布局方向flex-direction: column,
+      justify-content: center
+    3)vertical-align: middle
+
+问题4：元素对齐
+解决：
+  1.块级元素
+    1)使用flex布局,flex-direction: column, align-items: flex-start
+  2.内联元素
+    1)方法同上，缺点，只能左对齐或右对齐，当文本长度不同时就不好看了
+
+问题5：一行文字，自动设置文字间距，使文字顶满整个框
+解决：利用text-align: justify和:after选择器
+例子：
+  <span>welcome to my note!</span>
+  <style>
+  span{
+    width: 300px;
+    height: 24px
+    text-align: justify;
+    float: left;
+  }
+  span:after{
+    content:'';
+    width: 100%;
+    display: inline-block;
+    overflow: hidden;
+    height: 0;
+  }
+  </style>
+
+也有简单的办法但兼容性差：text-align-last: justify;
+
+问题6：input框的修改
+解决：
+  border: none;
+  outline: none;
+  font-height: 20px;
+  border-radius: 10px;
+

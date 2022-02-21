@@ -1,0 +1,154 @@
+报错：
+    当MySQL数据库由低版本升级到高版本8.0以上时，访问数据库服务时会报：
+    Client does not support authentication protocol requested by server; 
+    consider upgrading MySQL client的错误提示。
+    这是因为mysql无法识别旧版本得密码校验机制
+
+    解决方法一：
+        进入MySQL命令提示符窗口，输入密码进入数据库，输入：
+        ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';
+        然后按Enter键，其中root是用户名，localhost特指本地主机，mysql_native_password是旧的密码校验机制
+        再输入FLUSH PRIVILEGES;这行命令指：MySQL用户数据和权限有修改后，希望在"不重启MySQL服务"的情况下直接生效
+    
+    解决方法二：
+        在安装MySQL时，按照提示进入Authentication Method界面
+        选择保留旧有的校验方式（Use Legacy Authentication Method）
+        其它步骤根据提示进行操作即可
+
+
+
+问题：
+    mysql constraint#约束用法
+    正则表达式不够精通
+    
+登录Mysql：
+    mysql -u root -p
+
+数据库操作：
+    创建数据库：
+        CREATE DATABASE `数据库名`;
+
+    删除数据库：
+        DROP database `数据库名`;
+
+    选择数据库：
+        use `数据库名`;
+
+    显示数据库中所有表，需先use数据库;
+        SHOW TABLES;
+
+数据表操作：
+    创建数据表：
+        create table `tb_student`
+        (
+            #设`id`的位数为11且不足11位的数前面加0（00123456789）
+            #设`id`为主键且每次插入数据时自增
+            #插入数据时VALUES中填NULL
+            `id` int(11) not null auto_increment primary key,
+            `Name` varchar(32) not null,
+            `Age` int default 0,check(`Age`>0 and `Age`<=100),
+            `gender` boolean default 0,check(`gender`=0 or `gender`=1),
+            #设`stuId`为外键，用于多表和一
+            `stuId` int(11) not null,
+            constraint `FK_Stuid` foreign key(`stuId`) references `tb_student`(`id`)
+            #自动获取日期，在插入数据时不用管
+            `date` datetime default now()
+        );
+    
+    删除数据表：
+        DROP TABLE `tb_student`;
+
+    更改数据表：
+        #使用 ALTER TABLE 语句来改变原有表的结构，例如增加或删减列、创建或取消索引、更改原有列类型、重新命名列或表等。
+        ALTER TABLE <表名> [修改选项]
+        [修改选项]： 
+        {   
+            #COLUMN可有可无
+            #添加一列字段1，至字段2后一列
+            ADD COLUMN <列名1> <类型> AFTER <列名2>
+            #修改表名，并修改类型
+            CHANGE COLUMN <旧列名> <新列名> <新列类型>
+            #不懂
+            ALTER COLUMN <列名> { SET DEFAULT <默认值> | DROP DEFAULT }
+            #修改表名
+            RENAME TO <新表名>
+            #修改类型
+            MODIFY COLUMN <列名> <类型>
+            #删除列
+            DROP COLUMN <列名>  
+        }
+        如：
+        #往表tb_student中添加一列字段，字段名称为stu_num，并将其放置在第一列
+        ALTER TABLE tb_student ADD COLUMN stu_num INT FIRST;
+        
+    查看数据表：
+        DESC <表名>;
+
+数据操作：
+    插入数据：
+        INSERT INTO tb_student
+        (
+            id,
+            Name,
+            Age,
+            gender
+            #data自动获取，不用管
+        )
+        VALUES
+        (
+            #`id`自增，所以填NULL
+            NULL,
+            'little_liu',
+            21,
+            0
+        )
+        ,
+        (
+            NULL,
+            'xiaoliu',
+            25,
+            1
+        );
+
+    删除数据：
+        DELETE FROM tb_student WHERE id=1;
+
+    更改数据：
+        #更改表tb_student中的age的值为32，只更改id=1的一行中age
+        #WHERE子句可以使用操作符：=、!=、>、<、>=、<=，也可以使用WHERE id LIKE ''
+        UPDATE tb_student SET age=32 WHERE id=1;
+
+
+    查询数据：
+        SELECT * FROM tb_student LIMIT 5,10; // 检索记录行 6-15   
+      
+        SELECT * FROM tb_student LIMIT 5; //检索前 5 个记录行，LIMIT n 等价于 LIMIT 0,n。   
+  
+        SELECT * FROM tb_student;                      /* 查询表所有数据 */
+
+        SELECT Name FROM tb_student;                   /* 查询表字段数据 */
+
+        SELECT * FROM tb_student where name = "little_liu";   /* 查询表字段下条件数据 */
+
+        SELECT * from tb_student where name like "%/_ le_li %"; /* 模糊查询表下数据 */
+
+        SELECT * FROM tb_student where id BETWEEN "1" AND "5";    /* 查询表下字段范围数据 */
+
+        SELECT * FROM tb_student WHERE id in (1,2);                 /* 查询表字段下id为1和2的数据 */
+
+        SELECT DISTINCT gender FROM tb_student;                  /* 查询去重值 */
+
+        SELECT * FROM tb_student WHERE gender = 0 AND age > 22;  /*查询表下范围条件数据*/
+
+        SELECT * FROM tb_student WHERE gender = 0 OR gender = 1; /* 查询表下条件不同值 */
+
+        SELECT * FROM tb_student ORDER BY age;                      /* 查询表下值排序结果 */
+
+        SELECT * FROM tb_student ORDER BY age DESC;                 /* 查询表下排序结果降序 */
+
+        SELECT * FROM tb_student LIMIT 2;      /* 查询表下范围数据 */
+
+        SELECT name as zzz from tb_student;    /*别名查询表下数据*/
+
+        
+1

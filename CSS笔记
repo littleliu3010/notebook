@@ -1,3 +1,9 @@
+刷新自动滚动：
+history.scrollRestoration="manual"//将其设置为手动，chrome默认为auto
+setTimeout(() => {
+  window.scrollTo(0, 200)
+}, 0);
+
 常用导航栏样式：
   ul {
     list-style-type: none;

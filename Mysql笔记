@@ -23,7 +23,7 @@
     
 登录Mysql：
     mysql -u root -p
-
+      
 数据库操作：
     创建数据库：
         CREATE DATABASE `数据库名`;
